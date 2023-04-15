@@ -21,5 +21,7 @@
 <li>⚠️Em desenvolvimento.⚠️</li>
 
 <h2>Microsserviços</h2>
+<li>Catálogo de Instrumentos, o usuário poderá acessar e realizar buscas pelo nome do instrumento no campo de pesquisa ou simplesmente rolar a tela para baixo até encontrar algo que lhe agrade.</li>
+<li>Autenticação, após o usuário se cadastrar, quando ele for fazer o login validar sempre a veracidade dos seus dados antes de permiti-lo logar no sistema.</li>
 
  
