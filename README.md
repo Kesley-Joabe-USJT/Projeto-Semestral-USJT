@@ -9,7 +9,7 @@
 <li>Aplicação WEB que permite a divulgação de instrumentos musicais para a realização de troca deles entre os usuários da aplicação na cidade de São Paulo.</li>
 
 <h2>Integrantes do grupo</h2>
-<li>NOME: Joabe Morales Coelho Gonçalves RA:820128189
+<li>NOME: Joabe Morales Coelho Gonçalves RA: 820128189</li>
 <li>NOME: Kesley de Lima RA: 823113578</li>
 
 <h2>Descrição do Projeto</h2>
@@ -22,7 +22,7 @@
 
 <h2>Microsserviços</h2>
 <li>Catálogo de Instrumentos, o usuário poderá acessar e realizar buscas pelo nome do instrumento no campo de pesquisa ou simplesmente rolar a tela para baixo até encontrar algo que lhe agrade.</li>
-<li>Lista de Usuários, permite aos usuários verificar o prórprio perfil ou o perfil de outras pessoas e ver todos os animais que foram cadastrados no perfil selecionado e algumas informações do usuário como nome, endereço, entre outros.</li>
+<li>Lista de Usuários, login, logout e cadastro.</li>
 <li>Autenticação, após o usuário se cadastrar, quando ele for fazer o login validar sempre a veracidade dos seus dados antes de permiti-lo logar no sistema.</li>
 
  
