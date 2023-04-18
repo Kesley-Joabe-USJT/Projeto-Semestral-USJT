@@ -9,7 +9,7 @@
 <li>Aplicação WEB que permite a divulgação de instrumentos musicais para a realização de troca deles entre os usuários da aplicação na cidade de São Paulo.</li>
 
 <h2>Integrantes do grupo</h2>
-<li>NOME: Joabe Morales Coelho Gonçalves RA:
+<li>NOME: Joabe Morales Coelho Gonçalves RA:820128189
 <li>NOME: Kesley de Lima RA: 823113578</li>
 
 <h2>Descrição do Projeto</h2>
