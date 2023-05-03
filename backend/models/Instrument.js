@@ -17,6 +17,10 @@ const User = mongoose.model(
             type: String,
             required: true
         },
+        description: {
+            type: String,
+            required: true
+        },
         images: {
             type: Array,
             required: true
@@ -25,7 +29,7 @@ const User = mongoose.model(
             type: Boolean
         },
         user: Object,
-        exchanger: Object
+        changer: Object
     },
     { timestamps: true },
     ),

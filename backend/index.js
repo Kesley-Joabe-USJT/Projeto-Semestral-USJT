@@ -9,14 +9,16 @@ const conn = require('./db/conn')
 app.use(express.json())
 
 // Solve CORS
-app.use(cors({ credentials: true, origin: 'http://127.0.0.1:3000' }))
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 
 // Public folder for images
 app.use(express.static('public'))
 
 // Routes
 const UserRoutes = require('./routes/UserRoutes')
+const InstrumentRoutes = require('./routes/InstrumentRoutes')
 
 app.use('/users', UserRoutes)
+app.use('/instruments', InstrumentRoutes)
 
 app.listen(5000)
