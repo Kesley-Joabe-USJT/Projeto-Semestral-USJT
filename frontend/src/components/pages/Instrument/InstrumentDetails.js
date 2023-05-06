@@ -19,23 +19,14 @@ function InstrumentDetails() {
   const { setFlashMessage } = useFlashMessage()
   const [token] = useState(localStorage.getItem('token') || '')
 
+  const widthImage = '40px'
+  const heigthImage = '40px'
+
   useEffect(() => {
     api.get(`/instruments/${id}`).then((response) => {
       setInstrument(response.data.instrument)
     })
   }, [id])
-
-  useEffect(() => {
-    api
-      .get('/users/checkuser', {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`,
-        },
-      })
-      .then((response) => {
-        setUser(response.data)
-      })
-  }, [token])
 
   async function schedule() {
     let msgType = 'success'
@@ -64,8 +55,9 @@ function InstrumentDetails() {
       const phoneNumber = instrument.user.phone;
 
       const url = `https://wa.me/55${phoneNumber}`;
-      window.open(url);
-    };
+      window.open(url)
+    }
+
   return (
     <>
       {instrument.name && (
@@ -73,21 +65,17 @@ function InstrumentDetails() {
           <div className={styles.instrumentdetails_header}>
             <h1>{instrument.name}</h1>
             <h2 className={styles.anunciadopor} >Anunciado por {instrument.user.name}</h2>
-            <div>
-            {(user.image || preview) && (
             <RoundedImage
-              src={
+            src={
               preview
                 ? URL.createObjectURL(preview)
                 : `${process.env.REACT_APP_API}/images/users/${instrument.user.image}`
             }
             alt={user.name}
-            width={90}
-            height={90}
+            width={150}
+            height={150}
           />
-        )}
-        <hr style={{marginTop: '20px'}} />
-      </div>
+            <hr style={{marginTop: '20px'}} />
           </div>
           <div className={styles.instrument_images}>
             {instrument.images.map((image, index) => (
@@ -119,7 +107,7 @@ function InstrumentDetails() {
             </button>
           </div>
           ) : (
-            <p>
+            <p style={{ marginTop: '20px'}}>
               Você precisa <Link to="/register">criar uma conta</Link> ou <Link to="/login">fazer login</Link> para
               ter acesso ao contato do anunciante.
             </p>
