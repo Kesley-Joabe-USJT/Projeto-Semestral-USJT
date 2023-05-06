@@ -12,6 +12,10 @@ import Register from './components/pages/Auth/Register'
 import Home from './components/pages/Home'
 import Profile from './components/pages/User/Profile'
 import MyInstruments from './components/pages/Instrument/MyInstruments'
+import AddInstrument from './components/pages/Instrument/AddInstrument'
+import EditInstrument from './components/pages/Instrument/EditInstrument'
+import InstrumentDetails from './components/pages/Instrument/InstrumentDetails'
+import MyChanges from './components/pages/Instrument/MyChanges'
 
 /* context */
 import { UserProvider } from './context/UserContext'
@@ -28,6 +32,10 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/user/profile" element={<Profile />} />
       <Route path="/instrument/myinstruments" element={<MyInstruments />} />
+      <Route path="/instrument/add" element={<AddInstrument />} />
+      <Route path="/instrument/edit/:id" element={<EditInstrument />} />
+      <Route path="/instrument/mychanges" element={<MyChanges />} />
+      <Route path="/instrument/:id" element={<InstrumentDetails />} />
       <Route path="/" element={<Home />} />
      </Routes>
      </Container>

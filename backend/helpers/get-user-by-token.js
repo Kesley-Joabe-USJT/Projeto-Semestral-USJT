@@ -6,7 +6,7 @@ const getToken = require('./get-token')
 //get user by jwt token
 const getUserByToken = async (token) => {
     if (!token) {
-        return res.status(401).json({ message: 'Acesso Negado! '})
+        return res.status(401).json({ message: 'Tente novamente!'})
     }
 
 

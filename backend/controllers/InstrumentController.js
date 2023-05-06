@@ -218,9 +218,7 @@ module.exports = class InstrumentController {
             updatedData.description = description
         }
 
-        if (images.length === 0) {
-            res.status(422).json({ message: "A imagem do instrumento é obrigatório." })
-        } else {
+        if (images.length > 0) {
             updatedData.images = []
             images.map((image) => {
                 updatedData.images.push(image.filename)
@@ -249,14 +247,14 @@ module.exports = class InstrumentController {
     const user = await getUserByToken(token)
 
         if (instrument.user._id.equals(user._id)) {
-            res.status(422).json({ message: 'Você não pode agendar uma visita do seu próprio instrumento.' })
+            res.status(422).json({ message: 'Você não pode adicionar seu próprio instrumento a lista de "Minhas trocas".' })
             return
     }
 
     //check if user has already scheduled a visit
     if (instrument.changer) {
         if (instrument.changer._id.equals(user._id)) {
-            res.status(422).json({ message: 'Você já agendou uma visita desse instrumento.' })
+            res.status(422).json({ message: 'Você já adicionou esse instrumento a sua lista de "Minhas trocas"' })
             return
         }
     }
@@ -271,7 +269,7 @@ module.exports = class InstrumentController {
     await Instrument.findByIdAndUpdate(id, instrument)
 
     res.status(200).json({
-        message: `A visita foi agendada com sucesso, entre em contato com ${instrument.user.name} pelo telefone ${instrument.user.phone}.`
+        message: `O instrumento foi adicionado a sua lista de "Minhas trocas".`
     })
  }
 
@@ -300,7 +298,43 @@ module.exports = class InstrumentController {
     await Instrument.findByIdAndUpdate(id, instrument)
 
     res.status(200).json({
-        message: "Párabens! Você concluir a troca do instrumento!"
+        message: "Você concluiu a troca do instrumento!"
+    })
+ }
+
+ static async reopenExchange(req, res) {
+    const id = req.params.id
+
+    // check if instrument exists
+    const instrument = await Instrument.findOne({_id: id})
+
+    if(!instrument) {
+        res.status(404).json({ message: 'Instrumento não encontrado.' })
+        return
+    }
+
+    // check if logged in user registered the instrument
+    const token = getToken(req)
+    const user = await getUserByToken(token)
+
+    if (instrument.user._id.toString() !== user._id.toString()) {
+        res.status(422).json({ message: 'Houve um problema em processar a sua solicitação, tente novamente mais tarde!' })
+        return
+    }
+
+    if (instrument.available == true) {
+        res.status(422).json({ message: "Instrumento já está disponível para a troca!" })
+        console.log(instrument.available)
+        return
+
+    }
+
+    instrument.available = true
+
+    await Instrument.findByIdAndUpdate(id, instrument)
+
+    res.status(200).json({
+        message: "O instrumento foi definido como disponível para troca!"
     })
  }
 }

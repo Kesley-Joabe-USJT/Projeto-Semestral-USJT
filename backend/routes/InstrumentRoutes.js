@@ -20,5 +20,6 @@ router.delete('/:id', verifyToken, InstrumentController.removeInstrumentById)
 router.patch('/:id', verifyToken, imageUpload.array('images'), InstrumentController.updateInstrument)
 router.patch('/schedule/:id', verifyToken, InstrumentController.schedule)
 router.patch('/conclude/:id', verifyToken, InstrumentController.concludeChange)
+router.patch('/reopen/:id', verifyToken, InstrumentController.reopenExchange)
 
 module.exports = router

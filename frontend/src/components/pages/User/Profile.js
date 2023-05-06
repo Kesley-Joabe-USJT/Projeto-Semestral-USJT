@@ -1,6 +1,6 @@
 import api from '../../../utils/api'
 
-import Input from '../../form/input'
+import Input from '../../form/Input'
 
 import { useState, useEffect } from 'react'
 

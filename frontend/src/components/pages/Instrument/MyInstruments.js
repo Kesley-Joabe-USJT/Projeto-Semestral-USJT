@@ -25,7 +25,8 @@ function MyInstruments() {
       .then((response) => {
         setInstruments(response.data.instruments)
       })
-  }, [token])
+  
+    }, [token])
 
   async function removeInstrument(id) {
     let msgType = 'success'
@@ -50,7 +51,7 @@ function MyInstruments() {
     setFlashMessage(data.message, msgType)
   }
 
-  async function concludeAdoption(id) {
+  async function concludeChange(id) {
     let msgType = 'success'
 
     const data = await api
@@ -68,14 +69,43 @@ function MyInstruments() {
         return err.response.data
       })
 
-    setFlashMessage(data.message, msgType)
+    setFlashMessage(data.message + " A pagina será recarregada.", msgType)
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  }
+
+  async function reopenExchange(id) {
+    let msgType = 'success'
+
+    const data = await api
+      .patch(`/instruments/reopen/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        return response.data
+      })
+      .catch((err) => {
+        console.log(err)
+        msgType = 'error'
+        return err.response.data
+      })
+
+    setFlashMessage(data.message + " A pagina será recarregada.", msgType)
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   }
 
   return (
     <section>
       <div className={styles.instrumentslist_header}>
         <h1>Meus Instrumentos Cadastrados</h1>
-        <Link to="/instrument/add">Cadastrar Pet</Link>
+        <Link to="/instrument/add">Cadastrar Instrumento</Link>
       </div>
       <div className={styles.instrumentslist_container}>
         {instruments.length > 0 &&
@@ -90,18 +120,17 @@ function MyInstruments() {
               <div className={styles.actions}>
                 {instrument.available ? (
                   <>
-                    {instrument.adopter && (
                       <button
                         className={styles.conclude_btn}
                         onClick={() => {
-                          concludeAdoption(instrument._id)
+                          concludeChange(instrument._id)
                         }}
                       >
-                        Concluir adoção
+                        Concluir troca
                       </button>
-                    )}
+                    
 
-                    <Link to={`/instrument/edit/${instrument._id}`}>Editar</Link>
+                    <Link className={styles.actions} to={`/instrument/edit/${instrument._id}`} >Editar</Link>
                     <button
                       onClick={() => {
                         removeInstrument(instrument._id)
@@ -111,12 +140,18 @@ function MyInstruments() {
                     </button>
                   </>
                 ) : (
-                  <p>Pet já adotado</p>
-                )}
+                  <p>Instrumento já foi trocado<button
+                  onClick={() => {
+                    reopenExchange(instrument._id)
+                  }}
+                  >Reabrir troca</button></p>
+                  
+                )
+                }
               </div>
             </div>
           ))}
-        {instruments.length === 0 && <p>Ainda não há instruments cadastrados!</p>}
+        {instruments.length === 0 && <p>Ainda não há instrumentos cadastrados!</p>}
       </div>
     </section>
   )

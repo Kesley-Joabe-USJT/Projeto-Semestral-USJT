@@ -97,7 +97,7 @@ module.exports = class UserController {
         res
         .status(422)
         .json({
-            message: "Não há usuário cadastro com este e-mail!"
+            message: "Não há usuário cadastrado com este e-mail!"
         })
         return
      }

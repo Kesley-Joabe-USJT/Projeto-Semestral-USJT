@@ -1,7 +1,7 @@
 import api from '../../../utils/api'
 
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
 import styles from './AddInstrument.module.css'
 
@@ -10,12 +10,25 @@ import InstrumentForm from '../../form/InstrumentForm'
 /* hooks */
 import useFlashMessage from '../../../hooks/useFlashMessage'
 
-function AddInstrument() {
+function EditInstrument() {
+  const [instrument, setInstrument] = useState({})
   const [token] = useState(localStorage.getItem('token') || '')
+  const { id } = useParams()
   const { setFlashMessage } = useFlashMessage()
-  const navigate = useNavigate()
 
-  async function registerInstrument(instrument) {
+  useEffect(() => {
+    api
+      .get(`/instruments/${id}`, {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+        },
+      })
+      .then((response) => {
+        setInstrument(response.data.instrument)
+      })
+  }, [token, id])
+
+  async function updateInstrument(instrument) {
     let msgType = 'success'
 
     const formData = new FormData()
@@ -33,7 +46,7 @@ function AddInstrument() {
     formData.append('instrument', instrumentFormData)
 
     const data = await api
-      .post(`instruments/create`, formData, {
+      .patch(`instruments/${instrument._id}`, formData, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
           'Content-Type': 'multipart/form-data',
@@ -50,21 +63,19 @@ function AddInstrument() {
       })
 
     setFlashMessage(data.message, msgType)
-    if (msgType != 'error') {
-      navigate('/instrument/myinstruments')
-    }
   }
-  
 
   return (
     <section>
       <div className={styles.addinstrument_header}>
-        <h1>Cadastre um Instrumento</h1>
-        <p>Depois ele ficará disponível para troca</p>
+        <h1>Editando o Instrumento: {instrument.name}</h1>
+        <p>Depois da edição os dados serão atualizados no sistema</p>
       </div>
-      <InstrumentForm handleSubmit={registerInstrument} btnText="Cadastrar" />
+      {instrument.name && (
+        <InstrumentForm handleSubmit={updateInstrument} instrumentData={instrument} btnText="Editar" />
+      )}
     </section>
   )
 }
 
-export default AddInstrument
+export default EditInstrument
