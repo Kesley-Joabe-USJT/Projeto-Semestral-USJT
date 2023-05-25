@@ -47,9 +47,7 @@ function InstrumentDetails() {
       const { data } = err.response
       setFlashMessage(data.message, 'error')
     } finally {
-      setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
     }
   }
 
