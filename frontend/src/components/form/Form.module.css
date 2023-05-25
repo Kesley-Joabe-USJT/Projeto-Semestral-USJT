@@ -44,3 +44,23 @@
     margin-left: 1em;
   }
   
+  .loading {
+    font-size: 2rem;
+    animation: spin 1s infinite linear;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 500px){
+    .form_container {
+      margin-top: 60px;
+    }
+  }
+

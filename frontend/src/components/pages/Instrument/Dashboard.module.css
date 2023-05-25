@@ -132,9 +132,29 @@
     font-weight: bold;
   }
 
+  .loading {
+    font-size: 2rem;
+    animation: spin 1s infinite linear;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+
   @media (max-width: 680px) {
     .instrumentslist_header {
       justify-content: center;
+      margin-top: 100px;
+    }
+
+    .instrumentslist_header h1{
+      font-size: 20px;
       margin-top: 20px;
     }
     .instrumentslist_container {
@@ -143,6 +163,10 @@
 
     .instrumentlist_row {
       display: block;
+    }
+
+    .btnCadastrar {
+      font-size: 12px;
     }
 
     .instrumentlist_row span{
@@ -161,4 +185,5 @@
       .actions {
         margin-top: 20px;
       }
+
   }

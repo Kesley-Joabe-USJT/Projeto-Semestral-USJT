@@ -7,3 +7,24 @@
     margin-bottom: 0.2em;
   }
   
+  .loading {
+    font-size: 2rem;
+    animation: spin 1s infinite linear;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 680px) {
+    .addinstrument_header {
+      margin-top:  110px;
+      margin-bottom: -70px;
+    }
+  }
+  
