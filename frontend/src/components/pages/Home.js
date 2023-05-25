@@ -15,7 +15,9 @@ function Home() {
     
     api.get('/instruments').then((response) => {
       setInstruments(response.data.instruments)
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     })
   }, [])
 
@@ -53,7 +55,7 @@ function Home() {
             </div>
           ))}
         {instruments.length === 0 && (
-          <p>Não há instrumentos cadastrados ou disponíveis para adoção no momento!</p>
+          <p>Não há instrumentos cadastrados ou disponíveis para troca no momento!</p>
         )}
       </div>
     </section>

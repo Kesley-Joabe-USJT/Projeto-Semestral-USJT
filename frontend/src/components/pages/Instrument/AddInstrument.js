@@ -58,7 +58,9 @@ function AddInstrument() {
     if (msgType != 'error') {
       navigate('/instrument/myinstruments')
     }
-    setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   }
   
 

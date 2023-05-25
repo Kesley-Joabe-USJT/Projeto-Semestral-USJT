@@ -26,7 +26,9 @@ function InstrumentDetails() {
   useEffect(() => {
     api.get(`/instruments/${id}`).then((response) => {
       setInstrument(response.data.instrument)
-      setIsLoading(false)
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     })
   }, [id])
 
@@ -45,7 +47,9 @@ function InstrumentDetails() {
       const { data } = err.response
       setFlashMessage(data.message, 'error')
     } finally {
-      setIsLoading(false)
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   }
 

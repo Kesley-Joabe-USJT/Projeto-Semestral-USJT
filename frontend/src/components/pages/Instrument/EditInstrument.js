@@ -36,7 +36,9 @@ function EditInstrument() {
         setFlashMessage(err.response.data.message, 'error')
       })
       .finally(() => {
-        setIsLoading(false)
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       })
   }, [token, id])
   

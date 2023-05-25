@@ -28,15 +28,17 @@ function MyInstruments() {
         },
       })
       .then((response) => {
-        setInstruments(response.data.instruments)
+        setInstruments(response.data.instruments);
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       })
       .finally(() => {
-        setIsLoading(false)
-      })
-  }, [token])
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000); // Tempo de espera em milissegundos (aqui, 2000ms = 2 segundos)
+      });
+  }, [token]); 
   
 
   async function removeInstrument(id) {
@@ -60,7 +62,9 @@ function MyInstruments() {
       msgType = 'error'
       setFlashMessage(err.response.data.message, msgType)
     } finally {
-      setIsLoading(false)
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   }
 
@@ -86,7 +90,9 @@ function MyInstruments() {
       msgType = 'error'
       setFlashMessage(err.response.data.message, msgType)
     } finally {
-      setIsLoading(false)
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   }
   
@@ -112,7 +118,9 @@ function MyInstruments() {
       const data = err.response.data;
       setFlashMessage(data.message, msgType);
     } finally {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   }
   
