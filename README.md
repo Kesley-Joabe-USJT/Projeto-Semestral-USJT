@@ -15,7 +15,7 @@ Além disso, a aplicação permitirá a exclusão e edição do instrumento cada
 
 ## Status
 
-⚠️ Concluído. ⚠️
+✅ Concluído.✅
 
 ## Microsserviços
 
