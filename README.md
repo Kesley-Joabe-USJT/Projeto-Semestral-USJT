@@ -23,3 +23,5 @@ Além disso, a aplicação permitirá a exclusão e edição do instrumento cada
 - Detalhes do instrumento e do cadastrante: Ao selecionar um instrumento, o usuário irá ver todos os detalhes relacionados ao instrumento e informações do usuário que o cadastrou.
 - Lista de Usuários: permite que o usuário consulte o próprio perfil ou o de outras pessoas e veja os instrumentos cadastrados naquele perfil, além de algumas informações pessoais como o nome e o endereço da pessoa.
 - Autenticação: login, logout e cadastro.
+
+<h3>Link para acesso ao Aplicativo:</h3> https://troquetoque.vercel.app/
