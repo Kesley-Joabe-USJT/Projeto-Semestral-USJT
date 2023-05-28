@@ -1,7 +1,6 @@
 import api from '../../../utils/api'
 import { RiLoader4Line } from 'react-icons/ri';
 
-
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -60,7 +59,7 @@ function AddInstrument() {
     }
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 500);
   }
   
 

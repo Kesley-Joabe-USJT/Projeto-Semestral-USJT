@@ -12,6 +12,7 @@ function MyChanges() {
   const [instruments, setInstruments] = useState([])
   const [token] = useState(localStorage.getItem('token') || '')
   const [isLoading, setIsLoading] = useState(true);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 
   useEffect(() => {
     setIsLoading(true);
@@ -31,7 +32,7 @@ function MyChanges() {
       .finally(() => {
         setTimeout(() => {
           setIsLoading(false);
-        }, 1000);
+        }, 500);
       })
   }, [token])
   

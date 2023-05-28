@@ -1,26 +1,22 @@
-import api from '../../../utils/api'
+import api from '../../../utils/api';
 import { RiLoader4Line } from 'react-icons/ri';
-
-import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-
-import styles from './Dashboard.module.css'
-
-import RoundedImage from '../../layout/RoundedImage'
+import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import styles from './Dashboard.module.css';
+import RoundedImage from '../../layout/RoundedImage';
 import Overlay from '../../layout/Overlay';
-
-/* hooks */
-import useFlashMessage from '../../../hooks/useFlashMessage'
+import useFlashMessage from '../../../hooks/useFlashMessage';
+import { RiAlertLine } from 'react-icons/ri';
 
 function MyInstruments() {
-  const [instruments, setInstruments] = useState([])
-  const [token] = useState(localStorage.getItem('token') || '')
-  const { setFlashMessage } = useFlashMessage()
+  const [instruments, setInstruments] = useState([]);
+  const [token] = useState(localStorage.getItem('token') || '');
+  const { setFlashMessage } = useFlashMessage();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-  
+
     api
       .get('/instruments/myinstruments', {
         headers: {
@@ -36,71 +32,73 @@ function MyInstruments() {
       .finally(() => {
         setTimeout(() => {
           setIsLoading(false);
-        }, 1000); // Tempo de espera em milissegundos (aqui, 2000ms = 2 segundos)
+        }, 500);
       });
-  }, [token]); 
-  
+  }, [token]);
 
   async function removeInstrument(id) {
-    let msgType = 'success'
+    let msgType = 'success';
     setIsLoading(true);
 
     try {
-    const response = await api
-      .delete(`/instruments/${id}`, {
+      const response = await api.delete(`/instruments/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
-      })
-      setFlashMessage(response.data.message + ' A pagina será recarregada.', msgType)
-  
+      });
+
+      setFlashMessage(response.data.message + ' A página será recarregada.', msgType);
+
       setTimeout(() => {
-        window.location.reload()
-      }, 2000)
+        window.location.reload();
+      }, 2000);
     } catch (err) {
-      console.log(err)
-      msgType = 'error'
-      setFlashMessage(err.response.data.message, msgType)
+      console.log(err);
+      msgType = 'error';
+      setFlashMessage(err.response.data.message, msgType);
     } finally {
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
+      }, 500);
     }
   }
 
+  function handleDeleteConfirmation(id) {
+    setDeleteConfirmation(id);
+  }
+
   async function concludeChange(id) {
-    let msgType = 'success'
-  
+    let msgType = 'success';
+
     try {
-      setIsLoading(true)
-  
+      setIsLoading(true);
+
       const response = await api.patch(`/instruments/conclude/${id}`, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`,
         },
-      })
-  
-      setFlashMessage(response.data.message + ' A pagina será recarregada.', msgType)
-  
+      });
+
+      setFlashMessage(response.data.message + ' A página será recarregada.', msgType);
+
       setTimeout(() => {
-        window.location.reload()
-      }, 2000)
+        window.location.reload();
+      }, 2000);
     } catch (err) {
-      console.log(err)
-      msgType = 'error'
-      setFlashMessage(err.response.data.message, msgType)
+      console.log(err);
+      msgType = 'error';
+      setFlashMessage(err.response.data.message, msgType);
     } finally {
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
+      }, 500);
     }
   }
-  
 
   async function reopenExchange(id) {
-    let msgType = 'success'
+    let msgType = 'success';
     setIsLoading(true);
-  
+
     try {
       const response = await api.patch(`/instruments/reopen/${id}`, {
         headers: {
@@ -108,7 +106,7 @@ function MyInstruments() {
         },
       });
       const data = response.data;
-      setFlashMessage(data.message + " A pagina será recarregada.", msgType);
+      setFlashMessage(data.message + ' A página será recarregada.', msgType);
       setTimeout(() => {
         window.location.reload();
       }, 2000);
@@ -120,10 +118,25 @@ function MyInstruments() {
     } finally {
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
+      }, 500);
     }
   }
-  
+
+  const [deleteConfirmation, setDeleteConfirmation] = useState(null);
+
+  function handleDeleteConfirmation(id) {
+    setDeleteConfirmation(id);
+  }
+
+  function handleDeleteCancel() {
+    setDeleteConfirmation(null);
+  }
+
+  function handleDeleteConfirm(id) {
+    removeInstrument(id);
+    setDeleteConfirmation(null);
+  }
+
   return (
     <section>
       {isLoading && (
@@ -133,7 +146,9 @@ function MyInstruments() {
       )}
       <div className={styles.instrumentslist_header}>
         <h1>Meus Instrumentos Cadastrados</h1>
-        <Link className={styles.btnCadastrar} to="/instrument/add">Cadastrar Instrumento</Link>
+        <Link className={styles.btnCadastrar} to="/instrument/add">
+          Cadastrar Instrumento
+        </Link>
       </div>
       <div className={styles.instrumentslist_container}>
         {instruments.length > 0 &&
@@ -148,41 +163,56 @@ function MyInstruments() {
               <div className={styles.actions}>
                 {instrument.available ? (
                   <>
-                      <button
-                        className={styles.conclude_btn}
-                        onClick={() => {
-                          concludeChange(instrument._id)
-                        }}
-                      >
-                        Concluir troca
-                      </button>
-                    
-
-                    <Link className={styles.actions} to={`/instrument/edit/${instrument._id}`} >Editar</Link>
                     <button
+                      className={styles.conclude_btn}
                       onClick={() => {
-                        removeInstrument(instrument._id)
+                        concludeChange(instrument._id);
                       }}
                     >
+                      Concluir troca
+                    </button>
+
+                    <Link className={styles.actions} to={`/instrument/edit/${instrument._id}`}>
+                      Editar
+                    </Link>
+
+                    <button onClick={() => handleDeleteConfirmation(instrument._id)}>
                       Excluir
                     </button>
                   </>
                 ) : (
-                  <p>Instrumento já foi trocado<button
-                  onClick={() => {
-                    reopenExchange(instrument._id)
-                  }}
-                  >Reabrir troca</button></p>
-                  
-                )
-                }
+                  <p>
+                    Instrumento já foi trocado
+                    <button onClick={() => reopenExchange(instrument._id)}>
+                      Reabrir troca
+                    </button>
+                  </p>
+                )}
               </div>
             </div>
           ))}
         {instruments.length === 0 && <p>Ainda não há instrumentos cadastrados!</p>}
       </div>
+{deleteConfirmation && (
+  <>
+  
+    <div className={styles.overlay}></div>
+    <div className={styles.deleteConfirmation}>
+    <div className={styles.attentionBar}>
+  <RiAlertLine className={styles.attentionIcon} />
+  <p className={styles.attention}>Atenção</p>
+</div>
+      <p>Deseja realmente excluir este instrumento?</p>
+      <div className={styles.deleteConfirmationButtons}>
+        <button className={styles.btnCancelar} onClick={handleDeleteCancel}>Cancelar</button>
+        <button className={styles.btnConfirmar} onClick={() => handleDeleteConfirm(deleteConfirmation)}>Confirmar</button>
+      </div>
+    </div>
+  </>
+)}
+
     </section>
-  )
+  );
 }
 
-export default MyInstruments
+export default MyInstruments;

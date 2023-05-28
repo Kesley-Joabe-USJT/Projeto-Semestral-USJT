@@ -8,75 +8,78 @@ const ObjetcId = require('mongoose').Types.ObjectId
 module.exports = class InstrumentController {
 
     // create a instrument
-    static async create(req, res) {
-        const  { name, usageTime, color, description } = req.body
-
-        const images = req.files
-
-        const available = true
-
-        // images upload
-
-        // validation
-        if(!name) { 
-            res.status(422).json({ message: "O nome do instrumento é obrigatório." })
-            return
-        }
-
-        if(!usageTime) { 
-            res.status(422).json({ message: "O tempo de uso do instrumento é obrigatório." })
-            return
-        }
-
-        if(!color) { 
-            res.status(422).json({ message: "A cor do instrumento é obrigatória." })
-            return
-        }
-
-        if(!description) { 
-            res.status(422).json({ message: "A descrição é obrigatório." })
-            return
-        }
-
-        if (images.length === 0) {
-            res.status(422).json({ message: "A imagem do instrumento é obrigatório." })
-        }
-
-        // get instrument owner
-        const token = getToken(req)
-        const user = await getUserByToken(token)
-
-        //create a instrument
-        const instrument = new Instrument({
-            name,
-            usageTime,
-            color,
-            description,
-            available,
-            images: [],
-            user: {
-                _id: user._id,
-                name: user.name,
-                image: user.image,
-                phone: user.phone,
-            },
-        })
-
-        images.map((image) => {
-            instrument.images.push(image.filename)
-        })
-
-        try {
-        
-            const newInstrument = await instrument.save()
-            res.status(201).json({
-                message: "Instrumento cadastrado com sucesso!",
-                newInstrument,
-            })
-        } catch (error) {
-            res.status(500).json({ message: error })
-        }
+    // create a instrument
+static async create(req, res) {
+    const { name, usageTime, color, description } = req.body;
+  
+    const images = req.files;
+  
+    const available = true;
+  
+    // images upload
+  
+    // validation
+    if (!name) {
+      res.status(422).json({ message: "O nome do instrumento é obrigatório." });
+      return;
     }
+  
+    if (!usageTime) {
+      res.status(422).json({ message: "O tempo de uso do instrumento é obrigatório." });
+      return;
+    }
+  
+    if (!color) {
+      res.status(422).json({ message: "A cor do instrumento é obrigatória." });
+      return;
+    }
+  
+    if (!description) {
+      res.status(422).json({ message: "A descrição é obrigatória." });
+      return;
+    }
+  
+    if (images.length === 0) {
+      res.status(422).json({ message: "A imagem do instrumento é obrigatória." });
+      return;
+    }
+  
+    // get instrument owner
+    const token = getToken(req);
+    const user = await getUserByToken(token);
+  
+    //create a instrument
+    const instrument = new Instrument({
+      name,
+      usageTime,
+      color,
+      description,
+      available,
+      images: [],
+      user: {
+        _id: user._id,
+        name: user.name,
+        image: user.image,
+        phone: user.phone,
+      },
+    });
+  
+    images.map((image) => {
+      instrument.images.push(image.filename);
+    });
+  
+    try {
+  
+      const newInstrument = await instrument.save();
+      res.status(201).json({
+        message: "Instrumento cadastrado com sucesso!",
+        newInstrument,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  }
+  
 
     static async getAll(req, res) {
         const instruments = await Instrument.find().sort('-createdAt')

@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const Instrument = require('../models/Instrument');
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -210,12 +211,17 @@ module.exports = class UserController {
     }
 
    try {
-       // returns user pudate data
+       // returns user update data
        const updateUser =  await User.findByIdAndUpdate(
          {_id: user._id},
          {$set: user},
          {new: true},
        )
+
+       await Instrument.updateMany(
+         { 'user._id': user._id },
+         { $set: { 'user': updateUser } }
+       );
 
        res.status(200).json({
          message: "Usuário atualizado com sucesso!",
