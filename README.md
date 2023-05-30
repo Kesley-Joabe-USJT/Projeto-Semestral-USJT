@@ -20,8 +20,8 @@ Além disso, a aplicação permitirá a exclusão e edição do instrumento cada
 ## Microsserviços
 
 - Catálogo de Instrumentos: o usuário acessará uma tela onde ficarão visíveis os instrumentos disponíveis para troca, podendo rolar a tela para cima ou para baixo até que encontre o instrumento do seu interesse e utilizar filtros para facilitar a sua busca. 
+- Cadastro de Instrumento: Permite ao usuário, após realizar o seu cadastro no site, cadastrar instrumentos que ele gostaria de disponibilizar para trocas.
 - Detalhes do instrumento e do cadastrante: Ao selecionar um instrumento, o usuário irá ver todos os detalhes relacionados ao instrumento e informações do usuário que o cadastrou.
-- Lista de Usuários: permite que o usuário consulte o próprio perfil ou o de outras pessoas e veja os instrumentos cadastrados naquele perfil, além de algumas informações pessoais como o nome e o endereço da pessoa.
 - Autenticação: login, logout e cadastro.
 
 <h3>Link para acesso ao Aplicativo:</h3>
