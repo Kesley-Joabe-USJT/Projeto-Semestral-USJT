@@ -36,7 +36,9 @@ export default function useAuth() {
       msgText = error.response.data.message
       msgType = 'error'
     }
-
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
     setFlashMessage(msgText, msgType)
   }
 
@@ -55,7 +57,9 @@ export default function useAuth() {
       msgText = error.response.data.message
       msgType = 'error'
     }
-
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
     setFlashMessage(msgText, msgType)
   }
 
